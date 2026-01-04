@@ -1,7 +1,8 @@
 
 #include "DrawingContext.h"
 
-DrawingContext::DrawingContext():
+DrawingContext::DrawingContext(std::string window_name):
+    WindowHandler(window_name),
     m_Font{ nullptr },
     m_Color{ 255, 0, 0, 255 },
     m_FontSize{ 30 },
