@@ -6,6 +6,7 @@ DrawingContext::DrawingContext(std::string window_name):
     m_Font{ nullptr },
     m_Color{ 255, 0, 0, 255 },
     m_FontSize{ 30 },
+    m_ResizeTextPixelated{ false },
     m_TextBaseline{ BASE_TOP },
     m_TextAlign{ ALIGN_LEFT },
     m_ShapeBaseline{ BASE_TOP },
@@ -57,12 +58,29 @@ void DrawingContext::rect(float x, float y, float width, float height) {
     }
     SDL_RenderFillRect(getRenderer(), &rect);
 };
+void DrawingContext::rectOutline(float x, float y, float width, float height) {
+    SDL_FRect rect = { x, y, width, height };
+    if (m_ShapeAlign == ALIGN_CENTER) {
+        rect.x -= width / 2;
+    }else if (m_ShapeAlign == ALIGN_RIGHT) {
+        rect.x -= width;
+    }
+    if (m_ShapeBaseline == BASE_CENTER) {
+        rect.y -= height / 2;
+    }else if (m_ShapeBaseline == BASE_BOTTOM) {
+        rect.y -= height;
+    }
+    SDL_RenderRect(getRenderer(), &rect);
+};
 void DrawingContext::text(std::string text, float x, float y) {
     if (m_Font == nullptr) {
         SDL_Log("ERROR: Main: text(): Load Font First");
     }
     SDL_Surface* text_surface = TTF_RenderText_Blended(m_Font, text.c_str(), text.size(), m_Color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(getRenderer(), text_surface);
+    if (m_ResizeTextPixelated) {
+        SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
+    }
 
     float size_ratio = m_FontSize/static_cast<float>(texture->h);
     float width = static_cast<float>(texture->w) * size_ratio;
@@ -83,24 +101,11 @@ void DrawingContext::text(std::string text, float x, float y) {
     SDL_DestroySurface(text_surface);
     SDL_DestroyTexture(texture);
 };
-// void DrawingContext::textCentered(std::string text, float x, float y) {
-//     if (m_Font == nullptr) {
-//         SDL_Log("ERROR: Main: text(): Load Font First");
-//     }
-//     SDL_Surface* text_surface = TTF_RenderText_Blended(m_Font, text.c_str(), text.size(), m_Color);
-//     SDL_Texture* texture = SDL_CreateTextureFromSurface(getRenderer(), text_surface);
-
-//     float size_ratio = m_FontSize/static_cast<float>(texture->h);
-//     float width = static_cast<float>(texture->w) * size_ratio;
-//     float height = static_cast<float>(texture->h) * size_ratio;
-//     SDL_FRect dstRect{ x - (width / 2), y - (height / 2), width, height };
-//     SDL_RenderTexture(getRenderer(), texture, nullptr, &dstRect);
-
-//     SDL_DestroySurface(text_surface);
-//     SDL_DestroyTexture(texture);
-// };
 void DrawingContext::textSize(int size) {
     m_FontSize = size;
+};
+void DrawingContext::setTextResizePixelated(bool value) {
+    m_ResizeTextPixelated = value;
 };
 void DrawingContext::loadFont(BuiltinFont font) {
     switch (font) {

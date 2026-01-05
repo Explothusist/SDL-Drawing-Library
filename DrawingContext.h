@@ -45,6 +45,7 @@ class DrawingContext : public WindowHandler {
         void fill(SDL_Color color);
         void background(int r, int g, int b);
         void rect(float x, float y, float width, float height);
+        void rectOutline(float x, float y, float width, float height);
         void text(std::string text, float x, float y);
         // void textCentered(std::string text, float x, float y); // Use textAlign, shapeAlign instead
         void textSize(int size);
@@ -53,6 +54,8 @@ class DrawingContext : public WindowHandler {
 
         void textAlign(Baseline base, Alignment align);
         void shapeAlign(Baseline base, Alignment align);
+
+        void setTextResizePixelated(bool value); // Use with caution, may not look good
 
         void presentRenderer();
 
@@ -64,6 +67,7 @@ class DrawingContext : public WindowHandler {
         TTF_Font* m_Font;
         SDL_Color m_Color;
         int m_FontSize;
+        bool m_ResizeTextPixelated;
 
         Baseline m_TextBaseline;
         Alignment m_TextAlign;
