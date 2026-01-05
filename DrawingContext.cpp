@@ -102,6 +102,22 @@ void DrawingContext::text(std::string text, float x, float y) {
 void DrawingContext::textSize(int size) {
     m_FontSize = size;
 };
+void DrawingContext::loadFont(BuiltinFont font) {
+    switch (font) {
+        case Eight_Bit_Plus:
+            loadFont("SDL-Drawing-Library/fonts/8-bit-operator/8bitOperatorPlus-Regular.ttf");
+            break;
+        case Olde_English_Regular:
+            loadFont("SDL-Drawing-Library/fonts/olde-english-regular/Olde English Regular.ttf");
+            break;
+        case Playfair_Display:
+            loadFont("SDL-Drawing-Library/fonts/playfair-display/PlayfairDisplay-Regular.ttf");
+            break;
+        case Weiss_Run_D:
+            loadFont("SDL-Drawing-Library/fonts/41107_WeissRunD.ttf");
+            break;
+    }
+};
 void DrawingContext::loadFont(std::string font_path) {
     TTF_CloseFont(m_Font); // In case there was already a font open
 

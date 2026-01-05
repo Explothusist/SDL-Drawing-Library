@@ -22,6 +22,13 @@ typedef enum {
     ALIGN_RIGHT
 } Alignment;
 
+typedef enum {
+    Eight_Bit_Plus,
+    Olde_English_Regular,
+    Playfair_Display,
+    Weiss_Run_D
+} BuiltinFont;
+
 /*
 Handles interactions with SDL, mimics JS canvas a bit.
 */
@@ -41,6 +48,7 @@ class DrawingContext : public WindowHandler {
         void text(std::string text, float x, float y);
         // void textCentered(std::string text, float x, float y); // Use textAlign, shapeAlign instead
         void textSize(int size);
+        void loadFont(BuiltinFont font);
         void loadFont(std::string font_path);
 
         void textAlign(Baseline base, Alignment align);
