@@ -35,7 +35,7 @@ Handles interactions with SDL, mimics JS canvas a bit.
 class DrawingContext : public WindowHandler {
     public:
         DrawingContext(std::string window_name);
-        ~DrawingContext();
+        virtual ~DrawingContext();
 
         int init() override;
         void destroy() override;

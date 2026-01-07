@@ -8,6 +8,9 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <string>
 #include <vector>
+#include <windows.h>
+#include <commdlg.h>
+#include <iostream>
 
 constexpr int kScreenWidth{ 1000U };
 constexpr int kScreenHeight{ 1000U };
@@ -18,7 +21,7 @@ Handles interactions with SDL, mimics JS canvas a bit.
 class WindowHandler {
     public:
         WindowHandler(std::string window_name);
-        ~WindowHandler();
+        virtual ~WindowHandler();
 
         virtual int init();
         virtual void destroy();
@@ -30,6 +33,8 @@ class WindowHandler {
 
         int getScreenWidth();
         int getScreenHeight();
+
+        HWND getWindowHandle();
 
         WindowHandler(const WindowHandler&) = delete; // Copy constructor
         WindowHandler& operator=(const WindowHandler&) = delete; // Copy assignment operator

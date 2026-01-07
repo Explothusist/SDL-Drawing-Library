@@ -88,3 +88,8 @@ int WindowHandler::getScreenHeight() {
     }
     return screenHeight;
 };
+
+HWND WindowHandler::getWindowHandle() {
+    // return (HWND)SDL_GetWindowData(sdlWindow, "HWND");
+    return FindWindowA(NULL, m_window_name.c_str());
+}
