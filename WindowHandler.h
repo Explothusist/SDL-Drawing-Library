@@ -24,7 +24,7 @@ class WindowHandler {
         virtual ~WindowHandler();
 
         virtual int init();
-        virtual void destroy();
+        // virtual void destroy();
         void renderFrame();
 
         void clearLayers();

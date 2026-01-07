@@ -15,18 +15,17 @@ DrawingContext::DrawingContext(std::string window_name):
 
 };
 DrawingContext::~DrawingContext() {
-    destroy();
+    TTF_CloseFont(m_Font);
+    m_Font = nullptr; // WindowHandler::~WindowHandler will be called in a minute
 };
 
 int DrawingContext::init() {
     return WindowHandler::init();
 };
-void DrawingContext::destroy() {
-    TTF_CloseFont(m_Font);
-    m_Font = nullptr;
+// void DrawingContext::destroy() {
 
-    WindowHandler::destroy();
-};
+//     // WindowHandler::destroy(); // WindowHandler::~WindowHandler will be called in a minute
+// };
 
 void DrawingContext::fill(int r, int g, int b) {
     m_Color = { static_cast<unsigned char>(r), static_cast<unsigned char>(b), static_cast<unsigned char>(b), 255 };
@@ -106,6 +105,19 @@ void DrawingContext::textSize(int size) {
 };
 void DrawingContext::setTextResizePixelated(bool value) {
     m_ResizeTextPixelated = value;
+};
+int DrawingContext::measureTextWidth(std::string text) {
+    if (m_Font == nullptr) {
+        SDL_Log("ERROR: Main: text(): Load Font First");
+    }
+    SDL_Surface* text_surface = TTF_RenderText_Blended(m_Font, text.c_str(), text.size(), m_Color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(getRenderer(), text_surface);
+
+    float size_ratio = m_FontSize/static_cast<float>(texture->h);
+    // float width = static_cast<float>(texture->w) * size_ratio;
+    // float height = static_cast<float>(texture->h) * size_ratio;
+
+    return static_cast<float>(texture->w) * size_ratio;
 };
 void DrawingContext::loadFont(BuiltinFont font) {
     switch (font) {

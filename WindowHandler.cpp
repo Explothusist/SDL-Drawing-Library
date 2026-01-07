@@ -9,7 +9,21 @@ WindowHandler::WindowHandler(std::string window_name):
 
 };
 WindowHandler::~WindowHandler() {
-    destroy();
+    clearLayers();
+
+    if (m_renderer != nullptr) {
+        SDL_DestroyRenderer(m_renderer);
+        m_renderer = nullptr;
+    }
+    if (m_window != nullptr) {
+        SDL_DestroyWindow(m_window);
+        m_window = nullptr;
+    }
+
+    TTF_Quit();
+    SDL_Quit();
+
+    SDL_Log("COMPLETE: WindowHandler: destroy()");
 };
 int WindowHandler::init() {
 
@@ -44,23 +58,8 @@ int WindowHandler::init() {
     SDL_Log("COMPLETE: WindowHandler: init()");
     return 0;
 };
-void WindowHandler::destroy() {
-    clearLayers();
-
-    if (m_renderer != nullptr) {
-        SDL_DestroyRenderer(m_renderer);
-        m_renderer = nullptr;
-    }
-    if (m_window != nullptr) {
-        SDL_DestroyWindow(m_window);
-        m_window = nullptr;
-    }
-
-    TTF_Quit();
-    SDL_Quit();
-
-    SDL_Log("COMPLETE: WindowHandler: destroy()");
-};
+// void WindowHandler::destroy() {
+// };
 void WindowHandler::renderFrame() {
     SDL_SetRenderDrawColor(m_renderer, 0xff, 0xff, 0xff, 0xff);
     SDL_RenderClear(m_renderer);
