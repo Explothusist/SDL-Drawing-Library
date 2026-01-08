@@ -28,11 +28,11 @@ int DrawingContext::init() {
 // };
 
 void DrawingContext::fill(int r, int g, int b) {
-    m_Color = { static_cast<unsigned char>(r), static_cast<unsigned char>(b), static_cast<unsigned char>(b), 255 };
+    m_Color = { static_cast<unsigned char>(r), static_cast<unsigned char>(g), static_cast<unsigned char>(b), 255 };
     SDL_SetRenderDrawColor(getRenderer(), m_Color.r, m_Color.g, m_Color.b, m_Color.a);
 };
 void DrawingContext::fill(int r, int g, int b, int a) {
-    m_Color = { static_cast<unsigned char>(r), static_cast<unsigned char>(b), static_cast<unsigned char>(b), static_cast<unsigned char>(a) };
+    m_Color = { static_cast<unsigned char>(r), static_cast<unsigned char>(g), static_cast<unsigned char>(b), static_cast<unsigned char>(a) };
     SDL_SetRenderDrawColor(getRenderer(), m_Color.r, m_Color.g, m_Color.b, m_Color.a);
 };
 void DrawingContext::fill(SDL_Color color) {
