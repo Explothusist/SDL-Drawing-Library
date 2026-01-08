@@ -38,7 +38,7 @@ class DrawingContext : public WindowHandler {
         virtual ~DrawingContext();
 
         int init() override;
-        void destroy() override;
+        // void destroy() override;
 
         void fill(int r, int g, int b);
         void fill(int r, int g, int b, int a);
@@ -54,6 +54,8 @@ class DrawingContext : public WindowHandler {
 
         void textAlign(Baseline base, Alignment align);
         void shapeAlign(Baseline base, Alignment align);
+
+        int measureTextWidth(std::string text);
 
         void setTextResizePixelated(bool value); // Use with caution, may not look good
 
