@@ -46,7 +46,8 @@ class DrawingContext : public WindowHandler {
         void background(int r, int g, int b);
         void rect(float x, float y, float width, float height);
         void rectOutline(float x, float y, float width, float height);
-        void text(std::string text, float x, float y);
+        void text(std::string txt, float x, float y);
+        void text(std::string txt, float x, float y, float width, float vert_spacing);
         // void textCentered(std::string text, float x, float y); // Use textAlign, shapeAlign instead
         void textSize(int size);
         void loadFont(BuiltinFont font);
