@@ -1,4 +1,4 @@
-SDL_INCLUDE = -Ix86_64-w64-mingw32\include -Lx86_64-w64-mingw32\lib -lSDL3 -lSDL3_image -lSDL3_ttf
+SDL_INCLUDE = -ISDL3\include -ISDL3_image\include -ISDL3_ttf\include -LSDL3\lib -LSDL3_image\lib -LSDL3_ttf\lib -lSDL3 -lSDL3_image -lSDL3_ttf
 WINDOW_INCLUDE = DrawingContext.o WindowHandler.o
 HELPER_INCLUDE = $(WINDOW_INCLUDE)
 
