@@ -1,3 +1,9 @@
 *.o
 *.dll
 x86_64-w64-mingw32/
+SDL3-3.4.0/*
+!SDL3-3.4.0/stub
+SDL3_image-3.2.6/*
+!SDL3_image-3.2.6/stub
+SDL3_ttf-3.2.2/*
+!SDL3_ttf-3.2.2/stub

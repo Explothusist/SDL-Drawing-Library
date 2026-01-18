@@ -1,17 +1,24 @@
-SDL_INCLUDE = -ISDL3\include -ISDL3_image\include -ISDL3_ttf\include -LSDL3\lib -LSDL3_image\lib -LSDL3_ttf\lib -lSDL3 -lSDL3_image -lSDL3_ttf
-WINDOW_INCLUDE = DrawingContext.o WindowHandler.o
-HELPER_INCLUDE = $(WINDOW_INCLUDE)
+SDL_BASE = SDL3-3.4.0
+SDL_IMAGE = SDL3_image-3.2.6
+SDL_TTF = SDL3_ttf-3.2.2
 
-all: $(HELPER_INCLUDE)
+SDL_CFLAGS = -I$(SDL_BASE)/include -I$(SDL_IMAGE)/include -I$(SDL_TTF)/include
+SDL_LDFLAGS = -L$(SDL_BASE)/lib -L$(SDL_IMAGE)/lib -L$(SDL_TTF)/lib -lSDL3 -lSDL3_image -lSDL3_ttf
+WINDOW_OBJS = DrawingContext.o WindowHandler.o
+OBJS = $(WINDOW_OBJS)
+
+all: $(OBJS)
 	
-DrawingContext.o: WindowHandler.o DrawingContext.cpp
-	g++ -Wall -c DrawingContext.cpp $(SDL_INCLUDE) -o DrawingContext.o
+DrawingContext.o: DrawingContext.cpp DrawingContext.h
+	g++ -Wall -c DrawingContext.cpp $(SDL_CFLAGS) -o DrawingContext.o
 
-WindowHandler.o: WindowHandler.cpp
-	g++ -Wall -c WindowHandler.cpp $(SDL_INCLUDE) -o WindowHandler.o
+WindowHandler.o: WindowHandler.cpp WindowHandler.h
+	g++ -Wall -c WindowHandler.cpp $(SDL_CFLAGS) -o WindowHandler.o
 
 clean:
-	del main.exe
+	del $(OBJS)
 
 cleanAll:
-	del main.exe $(HELPER_INCLUDE)
+	del $(OBJS)
+
+.PHONY: all clean cleanAll
