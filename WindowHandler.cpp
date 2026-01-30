@@ -1,6 +1,8 @@
 
 #include "WindowHandler.h"
 
+#include "sdl_drawing_enable_logging.h"
+
 WindowHandler::WindowHandler(std::string window_name):
     m_window{ nullptr },
     m_renderer{ nullptr },
@@ -23,12 +25,16 @@ WindowHandler::~WindowHandler() {
     TTF_Quit();
     SDL_Quit();
 
+#ifdef SDL_DRAWING_LOGGING_ENABLED
     SDL_Log("COMPLETE: WindowHandler: destroy()");
+#endif
 };
 int WindowHandler::init() {
 
     if (!SDL_Init(SDL_INIT_VIDEO)) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: WindowHandler: init(): SDL Initialization Failed");
+#endif
         return 1;
     }
 
@@ -41,21 +47,29 @@ int WindowHandler::init() {
         &m_renderer
     );
     if ((m_window == nullptr) || (m_renderer == nullptr)) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: WindowHandler: init(): SDL Window and Renderer Creation Failed");
+#endif
         return 2;
     }
 
     if (!SDL_SetRenderVSync(m_renderer, 1)) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: WindowHandler: init(): SDL VSync Enabling Failed");
+#endif
         return 3;
     }
 
     if (!TTF_Init()) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: WindowHandler: init(): SDL TTF Initialization Failed");
+#endif
         return 4;
     }
 
+#ifdef SDL_DRAWING_LOGGING_ENABLED
     SDL_Log("COMPLETE: WindowHandler: init()");
+#endif
     return 0;
 };
 // void WindowHandler::destroy() {
@@ -76,14 +90,18 @@ SDL_Renderer* WindowHandler::getRenderer() {
 int WindowHandler::getScreenWidth() {
     bool success = SDL_GetWindowSizeInPixels(m_window, &screenWidth, &screenHeight);
     if (!success) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: WindowHandler: getScreenWidth(): Get Window Size Failed");
+#endif
     }
     return screenWidth;
 };
 int WindowHandler::getScreenHeight() {
     bool success = SDL_GetWindowSizeInPixels(m_window, &screenWidth, &screenHeight);
     if (!success) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: WindowHandler: getScreenHeight(): Get Window Size Failed");
+#endif
     }
     return screenHeight;
 };

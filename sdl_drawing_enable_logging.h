@@ -1,0 +1,5 @@
+#ifndef SDL_DRAWING_LOGGING_ENABLED
+
+// #define SDL_DRAWING_LOGGING_ENABLED
+
+#endif

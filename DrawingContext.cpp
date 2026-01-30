@@ -1,6 +1,7 @@
 
 #include "DrawingContext.h"
 
+#include "sdl_drawing_enable_logging.h"
 #include <sstream>
 
 DrawingContext::DrawingContext(std::string window_name):
@@ -75,7 +76,9 @@ void DrawingContext::rectOutline(float x, float y, float width, float height) {
 };
 void DrawingContext::text(std::string txt, float x, float y) {
     if (m_Font == nullptr) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: Main: text(): Load Font First");
+#endif
         return;
     }
     SDL_Surface* text_surface = TTF_RenderText_Blended(m_Font, txt.c_str(), txt.size(), m_Color);
@@ -105,7 +108,9 @@ void DrawingContext::text(std::string txt, float x, float y) {
 };
 void DrawingContext::text(std::string txt, float x, float y, float width, float vert_spacing) {
     if (m_Font == nullptr) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: Main: text(): Load Font First");
+#endif
         return;
     }
     std::vector<std::string> lines{ };
@@ -137,7 +142,9 @@ void DrawingContext::setTextResizePixelated(bool value) {
 };
 int DrawingContext::measureTextWidth(std::string text) {
     if (m_Font == nullptr) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: Main: text(): Load Font First");
+#endif
         return 0;
     }
     // SDL_Surface* text_surface = TTF_RenderText_Blended(m_Font, text.c_str(), text.size(), m_Color);
@@ -174,7 +181,9 @@ void DrawingContext::loadFont(std::string font_path) {
 
     m_Font = TTF_OpenFont(font_path.c_str(), font_path.size());
     if (m_Font == nullptr) {
+#ifdef SDL_DRAWING_LOGGING_ENABLED
         SDL_Log("ERROR: Main: loadFont(): Could not load font %s", font_path.c_str());
+#endif
         return;
     }
 };
